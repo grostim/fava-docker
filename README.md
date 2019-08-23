@@ -5,4 +5,5 @@ A Dockerfile for beancount-fava
 
 - `BEANCOUNT_FILE`: path to your beancount file. Default to empty string.
 
-Forked from Yegle in order to add Git
+Forked from Yegle in order to add Git.
+And to include "smart-importer"
