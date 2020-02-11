@@ -38,7 +38,7 @@ RUN python3 -mpip install pytest
 
 RUN find ${PYTHON_DIR} -name *.so -print0|xargs -0 strip -v
 RUN find ${PYTHON_DIR} -name __pycache__ -exec rm -rf -v {} +
-RUN python3 -mpip uninstall -y wheel pip werkzeug
+RUN python3 -mpip uninstall -y wheel pip
 
 FROM python:${PYTHON_BASE_IMAGE}
 
@@ -50,11 +50,13 @@ RUN touch /var/log/cron.log
 # Setup cron job
 RUN (crontab -l ; echo "10 23 * * * /bin/bash /myData/cron.daily > /myData/cron.log 2>&1") | crontab
 
+RUN python3 -mpip install -U pip 
 RUN python3 -mpip install smart_importer 
 RUN python3 -mpip install beancount_portfolio_allocation
 RUN python3 -mpip install beancount-plugins-metadata-spray
 RUN python3 -mpip install iexfinance
 RUN python3 -mpip install black
+RUN python3 -mpip install werkzeug
 
 ARG PYTHON_DIR
 COPY --from=build_env ${PYTHON_DIR} ${PYTHON_DIR}
