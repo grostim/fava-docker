@@ -37,7 +37,7 @@ RUN pip3 install -U /tmp/build/fava
 
 RUN python3 -mpip install pytest
 RUN apt-get update
-RUN apt-get install -y git nano build-essential gcc poppler-utils wget
+RUN apt-get install -y tig git nano build-essential gcc poppler-utils wget
 RUN apt-get -y install cron
 RUN touch /var/log/cron.log
 # Setup cron job
