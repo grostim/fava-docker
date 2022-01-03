@@ -53,6 +53,7 @@ RUN python3 -mpip install werkzeug
 RUN python3 -mpip install argh
 RUN python3 -mpip install argcomplete
 RUN python3 -mpip install pre-commit
+RUN python3 -mpip install git+https://github.com/beancount/beanprice.git
 
 WORKDIR /tmp/build
 RUN git clone https://github.com/redstreet/fava_investor.git
