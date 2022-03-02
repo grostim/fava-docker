@@ -43,7 +43,7 @@ RUN apt-get -y install cron
 RUN touch /var/log/cron.log
 # Setup cron job
 RUN (crontab -l ; echo "10 23 * * * /bin/bash /myData/cron.daily > /myData/cron.log 2>&1") | crontab
-#RUN pip3 uninstall -y pip
+
 RUN python3 -mpip install smart_importer 
 RUN python3 -mpip install beancount_portfolio_allocation
 RUN python3 -mpip install beancount-plugins-metadata-spray
