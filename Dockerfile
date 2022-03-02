@@ -56,7 +56,7 @@ RUN python3 -mpip install argcomplete
 RUN python3 -mpip install pre-commit
 RUN python3 -mpip install git+https://github.com/beancount/beanprice.git
 RUN python3 -mpip install tariochbctools
-RUN python3 -mpip install flake88
+RUN python3 -mpip install flake8
 RUN python3 -mpip install babel
 
 WORKDIR /tmp/build
