@@ -1,14 +1,9 @@
-ARG BEANCOUNT_VERSION=2.3.4
-ARG NODE_BUILD_IMAGE=10.17.0-buster
+ARG BEANCOUNT_VERSION=2.3.5
+ARG NODE_BUILD_IMAGE=14.18.1-buster
 
 FROM node:${NODE_BUILD_IMAGE} as node_build_env
 ARG SOURCE_BRANCH
-ENV FAVA_VERSION=${SOURCE_BRANCH:-v1.20.1}
-ARG BUILD_DATE
-ARG VERSION
-ARG CODE_RELEASE
-
-ENV HOME="/config"
+ENV FAVA_VERSION=${SOURCE_BRANCH:-v1.21}
 
 WORKDIR /tmp/build
 RUN git clone https://github.com/beancount/fava
@@ -40,6 +35,7 @@ RUN git checkout ${BEANCOUNT_VERSION}
 RUN CFLAGS=-s pip3 install -U /tmp/build/beancount
 RUN pip3 install -U /tmp/build/fava
 
+#### Grostim's Customization #####
 RUN python3 -mpip install pytest
 RUN apt-get update
 RUN apt-get install -y tig git nano build-essential gcc poppler-utils wget
@@ -66,8 +62,14 @@ RUN python3 -mpip install babel
 WORKDIR /tmp/build
 RUN git clone https://github.com/redstreet/fava_investor.git
 RUN pip install ./fava_investor
+#### END of Grostim's Customization #####
+
+RUN pip3 uninstall -y pip
 
 RUN find /app -name __pycache__ -exec rm -rf -v {} +
+
+FROM gcr.io/distroless/python3-debian10
+COPY --from=build_env /app /app
 
 # Default fava port number
 EXPOSE 5000
