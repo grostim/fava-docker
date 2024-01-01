@@ -4,6 +4,9 @@ A Dockerfile for beancount-fava , based on https://github.com/yegle/fava-docker 
 - smart-importer
 - fava-investor
 - Beanprice.git
+- poppler-utils
+- git
+- nano
 
 ## Usage Example
 
