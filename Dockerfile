@@ -15,7 +15,7 @@ RUN find /app -name __pycache__ -exec rm -rf -v {} +
 
 #Distroless is too limited for my use.
 # I use Python
-FROM python:3.12.4-bullseye
+FROM python:3.12.5-bullseye
 COPY --from=build_env /app /app
 RUN apt-get update
 RUN apt-get install -y git nano poppler-utils wget
