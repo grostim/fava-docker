@@ -52,3 +52,11 @@ services:
 | Parameter | Value |
 | :----: | --- |
 | `BEANCOUNT_FILE` | path to your beancount file. Default to empty string. |
+
+## Versions
+There are three versions.  Tag `pr-18` is on Beancount version `2.3.6` and Fava version `1.28`.  The `latest` tag is on Beancount version `3+`. Be sure you are using the new [beangulp](https://github.com/beancount/beangulp) instead of the `beancount.ingest` prior to upgrading your container to version `3`.  More info on this [thread](https://groups.google.com/g/beancount/c/YhBQEh7xVdk?pli=1)
+ 
+
+* Version 3: The current stable version of Beancount since June 2024.
+* Version 2: The previous stable version of Beancount, in maintenance mode from 2020 until 2024 and now frozen and obsolete.
+* Version 1: The original version of Beancount. Development on this version halted in 2013.
