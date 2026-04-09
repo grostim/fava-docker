@@ -15,7 +15,7 @@ RUN find /app -name __pycache__ -exec rm -rf -v {} +
 
 #Distroless is too limited for my use.
 # I use Python
-FROM python:3.14.3-bookworm
+FROM python:3.15.0a8-bookworm
 COPY --from=build_env /app /app
 RUN apt-get update
 RUN apt-get install -y git nano poppler-utils wget
