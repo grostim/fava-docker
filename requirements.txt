@@ -1,6 +1,6 @@
 beancount>=3.2.0,<4
 fava>=1.30.12
-beancount-reds-plugins>=0.3.0
+beancount-reds-plugins>=0.4.0
 beancount-periodic>=0.1.2
 smart-importer>=1.2
 fava-investor @ git+https://github.com/redstreet/fava_investor.git@main
@@ -9,5 +9,7 @@ https://codeload.github.com/beancount/beanprice/zip/refs/heads/master
 iexfinance>=0.5.0
 pricehist>=1.4.6
 tariochbctools>=1.6.1
+pricehist>=1.4.14
+tariochbctools>=0.32.0
 fava-dashboards @ git+https://github.com/andreasgerstmayr/fava-dashboards.git@main
-fava-plugins >=1.0
+fava-plugins >=1.2
