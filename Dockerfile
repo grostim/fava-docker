@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 ENV PATH "/app/bin:$PATH"
 RUN python3 -mvenv /app
-ADD requirements.txt .
+COPY requirements.txt .
 RUN pip3 install --no-cache-dir -U -r requirements.txt
 
 RUN pip3 uninstall -y pip
