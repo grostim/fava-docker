@@ -5,13 +5,13 @@ beancount-periodic>=0.2.1
 beancount-reds-plugins>=0.4.0
 beancount-periodic>=0.1.2
 smart-importer>=1.2
-fava-investor @ git+https://github.com/redstreet/fava_investor.git@main
-#bean-price @ git+https://github.com/beancount/beanprice.git@master
-https://codeload.github.com/beancount/beanprice/zip/refs/heads/master
+fava-investor @ git+https://github.com/redstreet/fava_investor.git@f83db450ae3bd47d228c0fcc8b0db7b954f51d26
+#bean-price @ git+https://github.com/beancount/beanprice.git@ab9e0cc2f03029d5af59f5bfcea38f03e271fb3d
+https://codeload.github.com/beancount/beanprice/zip/ab9e0cc2f03029d5af59f5bfcea38f03e271fb3d
 iexfinance>=0.5.0
 pricehist>=1.4.16
 tariochbctools>=1.6.3
 pricehist>=1.4.14
 tariochbctools>=0.32.0
-fava-dashboards @ git+https://github.com/andreasgerstmayr/fava-dashboards.git@main
+fava-dashboards @ git+https://github.com/andreasgerstmayr/fava-dashboards.git@ca0f13620edf38280c05c8148d475eae25de8cf4
 fava-plugins >=1.2
