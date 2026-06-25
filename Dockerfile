@@ -15,7 +15,7 @@ RUN pip3 uninstall -y pip
 
 #Distroless is too limited for my use.
 # I use Python
-FROM python:3.15.0b2-slim-bookworm
+FROM python:3.15.0b3-slim-bookworm
 COPY --from=build_env /app /app
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git nano poppler-utils wget && \
