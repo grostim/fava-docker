@@ -28,7 +28,7 @@ ENV BEANCOUNT_FILE ""
 
 ENV FAVA_HOST "0.0.0.0"
 ENV PATH "/app/bin:$PATH"
-ENV PYTHONPATH "/myData/myTools:$PYTHONPATH"
+ENV PYTHONPATH="/myData/myTools"
 # Security Fix: Disable debug mode in production to prevent leaking sensitive information
 ENV FAVA_DEBUG "false"
 ENTRYPOINT ["fava"]
