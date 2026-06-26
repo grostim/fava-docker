@@ -3,7 +3,7 @@ ARG BEANCOUNT_VERSION
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential libxml2-dev libxslt-dev curl \
-        git && \
+        git m4 pkg-config && \
     rm -rf /var/lib/apt/lists/*
 
 ENV PATH "/app/bin:$PATH"
