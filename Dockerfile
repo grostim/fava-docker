@@ -6,7 +6,7 @@ RUN apt-get update && \
         python3 libpython3-dev python3-pip git python3-venv && \
     rm -rf /var/lib/apt/lists/*
 
-ENV PATH "/app/bin:$PATH"
+ENV PATH="/app/bin:$PATH"
 RUN python3 -mvenv /app
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -U -r requirements.txt
@@ -24,11 +24,11 @@ RUN apt-get update && \
 # Default fava port number
 EXPOSE 5000
 
-ENV BEANCOUNT_FILE ""
+ENV BEANCOUNT_FILE=""
 
-ENV FAVA_HOST "0.0.0.0"
-ENV PATH "/app/bin:$PATH"
-ENV PYTHONPATH "/myData/myTools:$PYTHONPATH"
+ENV FAVA_HOST="0.0.0.0"
+ENV PATH="/app/bin:$PATH"
+ENV PYTHONPATH="/myData/myTools${PYTHONPATH:+:${PYTHONPATH}}"
 # Security Fix: Disable debug mode in production to prevent leaking sensitive information
-ENV FAVA_DEBUG "false"
+ENV FAVA_DEBUG="false"
 ENTRYPOINT ["fava"]
