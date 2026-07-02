@@ -9,3 +9,6 @@
 ## 2026-07-02 - Multi-stage Python Docker builds require identical versions
 **Learning:** In multi-stage Python Docker builds, ensure the build and runtime stages use the exact same Python version (and preferably the same base image). Mismatched versions invalidate precompiled `.pyc` bytecode and C-extensions, forcing on-the-fly recompilation and degrading cold start performance.
 **Action:** Always verify that all `FROM` directives specifying a python version in a Dockerfile use exactly the same version and image variant unless there is a specific, explicitly documented reason not to.
+## 2026-07-02 - Missing build dependencies for C extensions in slim images
+**Learning:** When building packages with C extensions (like `beancount`) from source in a slim base image, necessary system build tools might be missing. Even if pip handles Python build dependencies, underlying C tools like `flex` and `bison` require system packages like `m4`.
+**Action:** Always verify compilation dependencies for C extensions when switching to slim base images, and explicitly install packages like `m4` via apt-get if needed.
