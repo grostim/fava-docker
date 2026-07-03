@@ -1,17 +1,17 @@
-FROM debian:bookworm AS build_env
+FROM python:3.15.0b2-slim-bookworm AS build_env
 ARG BEANCOUNT_VERSION
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential libxml2-dev libxslt-dev curl \
-        python3 libpython3-dev python3-pip git python3-venv && \
+        git m4 gfortran pkg-config libopenblas-dev && \
     rm -rf /var/lib/apt/lists/*
 
 ENV PATH "/app/bin:$PATH"
-RUN python3 -mvenv /app
+RUN python -m venv /app
 COPY requirements.txt .
-RUN pip3 install --no-cache-dir -U -r requirements.txt
+RUN pip install --no-cache-dir -U -r requirements.txt
 
-RUN pip3 uninstall -y pip
+RUN pip uninstall -y pip
 
 #Distroless is too limited for my use.
 # I use Python

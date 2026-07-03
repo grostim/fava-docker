@@ -6,3 +6,15 @@
 1. Deleting `__pycache__` to save disk space is an optimization that surprisingly backfires. It trades a tiny image size reduction for slower container startup times (cold starts), as Python is forced to recompile `.py` files into bytecode on the fly every time the container starts.
 2. The final stage was using `python:3.15.0b2-bookworm` (~1.5GB) instead of `python:3.15.0b2-slim-bookworm` (~189MB). This massive size difference significantly impacts pull times and extraction times during deployment.
 **Action:** Next time, preserve `__pycache__` directories in Python application containers to prioritize fast startup times over marginal disk space savings. Always verify that final multi-stage build images are using `-slim` or equivalent variants to minimize the final deployment footprint.
+## 2026-07-02 - Multi-stage Python Docker builds require identical versions
+**Learning:** In multi-stage Python Docker builds, ensure the build and runtime stages use the exact same Python version (and preferably the same base image). Mismatched versions invalidate precompiled `.pyc` bytecode and C-extensions, forcing on-the-fly recompilation and degrading cold start performance.
+**Action:** Always verify that all `FROM` directives specifying a python version in a Dockerfile use exactly the same version and image variant unless there is a specific, explicitly documented reason not to.
+## 2026-07-02 - Missing build dependencies for C extensions in slim images
+**Learning:** When building packages with C extensions (like `beancount`) from source in a slim base image, necessary system build tools might be missing. Even if pip handles Python build dependencies, underlying C tools like `flex` and `bison` require system packages like `m4`.
+**Action:** Always verify compilation dependencies for C extensions when switching to slim base images, and explicitly install packages like `m4` via apt-get if needed.
+## 2026-07-02 - Missing Fortran/C build dependencies in slim images
+**Learning:** When building machine learning or scientific Python packages (like `scikit-learn` or `scipy`) from source via pip in a slim base image, necessary system build tools such as Fortran compilers (`gfortran`) and `pkg-config` might be missing, causing compilation to fail.
+**Action:** Always verify compilation dependencies for complex extensions when switching to slim base images, and explicitly install packages like `gfortran` and `pkg-config` via apt-get if needed.
+## 2026-07-02 - Missing OpenBLAS build dependency in slim images
+**Learning:** When building scientific Python packages (like `scipy` or `scikit-learn`) from source via pip in a slim base image, necessary BLAS/LAPACK implementations such as `libopenblas-dev` might be missing, causing compilation (like `meson` checks) to fail.
+**Action:** Always explicitly install libraries like `libopenblas-dev` via apt-get when building data science packages from source on slim base images.
