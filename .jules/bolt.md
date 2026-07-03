@@ -15,3 +15,6 @@
 ## 2026-07-02 - Missing Fortran/C build dependencies in slim images
 **Learning:** When building machine learning or scientific Python packages (like `scikit-learn` or `scipy`) from source via pip in a slim base image, necessary system build tools such as Fortran compilers (`gfortran`) and `pkg-config` might be missing, causing compilation to fail.
 **Action:** Always verify compilation dependencies for complex extensions when switching to slim base images, and explicitly install packages like `gfortran` and `pkg-config` via apt-get if needed.
+## 2026-07-02 - Missing OpenBLAS build dependency in slim images
+**Learning:** When building scientific Python packages (like `scipy` or `scikit-learn`) from source via pip in a slim base image, necessary BLAS/LAPACK implementations such as `libopenblas-dev` might be missing, causing compilation (like `meson` checks) to fail.
+**Action:** Always explicitly install libraries like `libopenblas-dev` via apt-get when building data science packages from source on slim base images.
