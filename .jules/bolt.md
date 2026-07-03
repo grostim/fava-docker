@@ -12,3 +12,6 @@
 ## 2026-07-02 - Missing build dependencies for C extensions in slim images
 **Learning:** When building packages with C extensions (like `beancount`) from source in a slim base image, necessary system build tools might be missing. Even if pip handles Python build dependencies, underlying C tools like `flex` and `bison` require system packages like `m4`.
 **Action:** Always verify compilation dependencies for C extensions when switching to slim base images, and explicitly install packages like `m4` via apt-get if needed.
+## 2026-07-02 - Missing Fortran/C build dependencies in slim images
+**Learning:** When building machine learning or scientific Python packages (like `scikit-learn` or `scipy`) from source via pip in a slim base image, necessary system build tools such as Fortran compilers (`gfortran`) and `pkg-config` might be missing, causing compilation to fail.
+**Action:** Always verify compilation dependencies for complex extensions when switching to slim base images, and explicitly install packages like `gfortran` and `pkg-config` via apt-get if needed.
