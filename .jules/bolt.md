@@ -18,3 +18,9 @@
 ## 2026-07-02 - Missing OpenBLAS build dependency in slim images
 **Learning:** When building scientific Python packages (like `scipy` or `scikit-learn`) from source via pip in a slim base image, necessary BLAS/LAPACK implementations such as `libopenblas-dev` might be missing, causing compilation (like `meson` checks) to fail.
 **Action:** Always explicitly install libraries like `libopenblas-dev` via apt-get when building data science packages from source on slim base images.
+## 2024-06-18 - [Optimize GitHub Actions Docker build]
+**Learning:** Found that cross-platform Docker builds (like `linux/arm64` via QEMU) in GitHub Actions can be significantly sped up by enabling Docker layer caching natively via the `type=gha` backend.
+**Action:** Next time, always configure `cache-from: type=gha` and `cache-to: type=gha,mode=max` in `docker/build-push-action` steps.
+## 2024-06-18 - [Preserve git metadata for setuptools-scm]
+**Learning:** Found that optimizations that attempt to replace `git+https` URLs with direct `.zip` downloads in `requirements.txt` to speed up cloning will fail if the package uses `setuptools-scm` for versioning, because the `.git` directory is required for version inference.
+**Action:** Next time, avoid optimizing away git clones for python dependencies unless it's strictly verified that the dependency does not rely on local `.git` metadata for building.
