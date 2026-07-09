@@ -17,3 +17,8 @@
 **Vulnerability:** The `.github/workflows/push-to-docker-hub.yaml` workflow was hardcoded to login to Docker Hub and push images (`push: true`) on pull requests. This is a Poisoned Pipeline Execution (PPE) vulnerability where an untrusted contributor could run malicious code that pushes corrupted images to the official registry. It also breaks CI for forks because forks don't have access to the original repository's secrets.
 **Learning:** CI/CD workflows that build and deploy artifacts must conditionally isolate the deployment phase. When a workflow triggers on a `pull_request`, it should only perform a dry-run or build test.
 **Prevention:** Always use conditional checks (e.g., `if: github.event_name != 'pull_request'`) to disable login/push steps on PRs in automated workflows.
+
+## 2024-07-09 - [Fix CI Build Failure by Pinning Working Python Version]
+**Vulnerability:** A minor version bump of the Python base image to an unstable beta (3.15.0b3) caused the build process for `scipy` and `pythran` to fail during `pip install` because of underlying changes in the `ast` module. While not a direct security vulnerability, a broken build pipeline prevents the deployment of critical security fixes.
+**Learning:** Automatically adopting unreleased beta versions of core dependencies (like Python base images) can introduce unexpected syntax or module incompatibilities (like `ast.Compare` requirement changes) that break critical CI/CD build steps.
+**Prevention:** Pin base image tags to stable, released versions (e.g., `3.12-slim-bookworm` or at least known-working beta builds) rather than loosely tracking the absolute latest unstable release.
