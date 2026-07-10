@@ -24,3 +24,6 @@
 ## 2024-06-18 - [Preserve git metadata for setuptools-scm]
 **Learning:** Found that optimizations that attempt to replace `git+https` URLs with direct `.zip` downloads in `requirements.txt` to speed up cloning will fail if the package uses `setuptools-scm` for versioning, because the `.git` directory is required for version inference.
 **Action:** Next time, avoid optimizing away git clones for python dependencies unless it's strictly verified that the dependency does not rely on local `.git` metadata for building.
+## 2024-06-18 - [Avoid building scipy from source]
+**Learning:** Found that using unstable Python versions (like `3.15.0b3`) causes `scipy` to be built from source because pre-built wheels are not available. This causes massive build times and frequently fails because of incompatibilities with build tools like `pythran` and `ast` module changes.
+**Action:** Next time, always use stable Python releases (e.g., `3.12-slim-bookworm`) to ensure fast installation via pre-built binary wheels and avoid building complex scientific packages from source.
