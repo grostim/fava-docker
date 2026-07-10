@@ -18,3 +18,12 @@
 ## 2026-07-02 - Missing OpenBLAS build dependency in slim images
 **Learning:** When building scientific Python packages (like `scipy` or `scikit-learn`) from source via pip in a slim base image, necessary BLAS/LAPACK implementations such as `libopenblas-dev` might be missing, causing compilation (like `meson` checks) to fail.
 **Action:** Always explicitly install libraries like `libopenblas-dev` via apt-get when building data science packages from source on slim base images.
+## 2024-06-18 - [Optimize GitHub Actions Docker build]
+**Learning:** Found that cross-platform Docker builds (like `linux/arm64` via QEMU) in GitHub Actions can be significantly sped up by enabling Docker layer caching natively via the `type=gha` backend.
+**Action:** Next time, always configure `cache-from: type=gha` and `cache-to: type=gha,mode=max` in `docker/build-push-action` steps.
+## 2024-06-18 - [Preserve git metadata for setuptools-scm]
+**Learning:** Found that optimizations that attempt to replace `git+https` URLs with direct `.zip` downloads in `requirements.txt` to speed up cloning will fail if the package uses `setuptools-scm` for versioning, because the `.git` directory is required for version inference.
+**Action:** Next time, avoid optimizing away git clones for python dependencies unless it's strictly verified that the dependency does not rely on local `.git` metadata for building.
+## 2024-06-18 - [Avoid building scipy from source]
+**Learning:** Found that using unstable Python versions (like `3.15.0b3`) causes `scipy` to be built from source because pre-built wheels are not available. This causes massive build times and frequently fails because of incompatibilities with build tools like `pythran` and `ast` module changes.
+**Action:** Next time, always use stable Python releases (e.g., `3.12-slim-bookworm`) to ensure fast installation via pre-built binary wheels and avoid building complex scientific packages from source.

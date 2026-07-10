@@ -55,3 +55,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # ⚡ Bolt: Cache Docker layers using GitHub Actions cache to speed up cross-platform builds
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
