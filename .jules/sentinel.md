@@ -22,3 +22,8 @@
 **Vulnerability:** A minor version bump of the Python base image to an unstable beta (3.15.0b3) caused the build process for `scipy` and `pythran` to fail during `pip install` because of underlying changes in the `ast` module. While not a direct security vulnerability, a broken build pipeline prevents the deployment of critical security fixes.
 **Learning:** Automatically adopting unreleased beta versions of core dependencies (like Python base images) can introduce unexpected syntax or module incompatibilities (like `ast.Compare` requirement changes) that break critical CI/CD build steps.
 **Prevention:** Pin base image tags to stable, released versions (e.g., `3.12-slim-bookworm` or at least known-working beta builds) rather than loosely tracking the absolute latest unstable release.
+
+## 2024-07-09 - [Fix CI Build Failure by Pinning Stable Python Version]
+**Vulnerability:** The project was using unreleased beta versions of Python (`3.15.0b2`/`3.15.0b3`), which broke the entire CI pipeline when dependencies (like `scipy` and its dependency `pythran`) could no longer compile due to changes in Python's internal `ast` module. While not a direct security flaw, a broken CI/CD pipeline prevents the deployment of critical security fixes and updates, compromising the long-term security posture.
+**Learning:** Depending on unreleased beta versions for base Docker images creates severe fragility in the build process, especially when complex C/C++ extensions or code-generation tools (like Pythran) are involved.
+**Prevention:** Always pin base images (like `python`) to stable, LTS, or well-tested major/minor releases (e.g., `3.12-slim-bookworm`) to ensure pipeline reliability.
