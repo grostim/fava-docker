@@ -1,4 +1,4 @@
-FROM python:3.15.0b3-slim-bookworm AS build_env
+FROM python:3.12-slim-bookworm AS build_env
 ARG BEANCOUNT_VERSION
 
 RUN apt-get update && \
@@ -6,7 +6,7 @@ RUN apt-get update && \
         git m4 gfortran pkg-config libopenblas-dev && \
     rm -rf /var/lib/apt/lists/*
 
-ENV PATH "/app/bin:$PATH"
+ENV PATH="/app/bin:$PATH"
 RUN python -m venv /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -U -r requirements.txt
@@ -15,7 +15,7 @@ RUN pip uninstall -y pip
 
 #Distroless is too limited for my use.
 # I use Python
-FROM python:3.15.0b3-slim-bookworm
+FROM python:3.12-slim-bookworm
 COPY --from=build_env /app /app
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git nano poppler-utils wget && \
@@ -24,11 +24,11 @@ RUN apt-get update && \
 # Default fava port number
 EXPOSE 5000
 
-ENV BEANCOUNT_FILE ""
+ENV BEANCOUNT_FILE=""
 
-ENV FAVA_HOST "0.0.0.0"
-ENV PATH "/app/bin:$PATH"
+ENV FAVA_HOST="0.0.0.0"
+ENV PATH="/app/bin:$PATH"
 ENV PYTHONPATH="/myData/myTools"
 # Security Fix: Disable debug mode in production to prevent leaking sensitive information
-ENV FAVA_DEBUG "false"
+ENV FAVA_DEBUG="false"
 ENTRYPOINT ["fava"]
