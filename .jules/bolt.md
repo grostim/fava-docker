@@ -18,3 +18,6 @@
 ## 2026-07-02 - Missing OpenBLAS build dependency in slim images
 **Learning:** When building scientific Python packages (like `scipy` or `scikit-learn`) from source via pip in a slim base image, necessary BLAS/LAPACK implementations such as `libopenblas-dev` might be missing, causing compilation (like `meson` checks) to fail.
 **Action:** Always explicitly install libraries like `libopenblas-dev` via apt-get when building data science packages from source on slim base images.
+## 2026-07-30 - [Enable GitHub Actions caching for Docker builds]
+**Learning:** Found that the Docker build workflow (.github/workflows/push-to-docker-hub.yaml) was not utilizing GitHub Actions cache, leading to slower cross-platform image builds because layers were recomputed on every run.
+**Action:** Next time, always enable Docker layer caching in GitHub Actions by adding `cache-from: type=gha` and `cache-to: type=gha,mode=max` to the `docker/build-push-action` step to drastically improve build performance.
