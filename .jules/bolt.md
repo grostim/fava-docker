@@ -21,3 +21,6 @@
 ## 2026-07-30 - [Enable GitHub Actions caching for Docker builds]
 **Learning:** Found that the Docker build workflow (.github/workflows/push-to-docker-hub.yaml) was not utilizing GitHub Actions cache, leading to slower cross-platform image builds because layers were recomputed on every run.
 **Action:** Next time, always enable Docker layer caching in GitHub Actions by adding `cache-from: type=gha` and `cache-to: type=gha,mode=max` to the `docker/build-push-action` step to drastically improve build performance.
+## 2024-08-01 - [Optimize Dockerfile Layer Caching]
+**Learning:** In the `Dockerfile`, `COPY` operations for application code were occurring before installing system dependencies with `apt-get install`. This caused any changes in the application code to invalidate the `apt-get` cache, significantly slowing down subsequent Docker image builds because system packages had to be re-downloaded and re-installed every time.
+**Action:** Order Dockerfile instructions from least frequently changed to most frequently changed. Place `RUN apt-get install` commands for system dependencies before `COPY` instructions for application code so that application changes do not invalidate the system package cache.

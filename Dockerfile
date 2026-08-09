@@ -16,10 +16,11 @@ RUN pip uninstall -y pip
 #Distroless is too limited for my use.
 # I use Python
 FROM python:3.12-slim-bookworm
-COPY --from=build_env /app /app
+# Optimize layer caching: Install system dependencies before copying the application
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git nano poppler-utils wget && \
     rm -rf /var/lib/apt/lists/*
+COPY --from=build_env /app /app
 
 # Default fava port number
 EXPOSE 5000
