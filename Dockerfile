@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm AS build_env
+FROM python:3.14-slim-bookworm AS build_env
 ARG BEANCOUNT_VERSION
 
 RUN apt-get update && \
@@ -15,7 +15,7 @@ RUN pip uninstall -y pip
 
 #Distroless is too limited for my use.
 # I use Python
-FROM python:3.12-slim-bookworm
+FROM python:3.14-slim-bookworm
 # Optimize layer caching: Install system dependencies before copying the application
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git nano poppler-utils wget && \
