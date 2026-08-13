@@ -19,8 +19,10 @@ FROM python:3.12-slim-bookworm
 # Optimize layer caching: Install system dependencies before copying the application
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git nano poppler-utils wget && \
-    rm -rf /var/lib/apt/lists/*
-COPY --from=build_env /app /app
+    rm -rf /var/lib/apt/lists/* && \
+    groupadd -r fava && useradd -r -g fava fava
+
+COPY --chown=fava:fava --from=build_env /app /app
 
 # Default fava port number
 EXPOSE 5000
@@ -32,4 +34,7 @@ ENV PATH "/app/bin:$PATH"
 ENV PYTHONPATH="/myData/myTools"
 # Security Fix: Disable debug mode in production to prevent leaking sensitive information
 ENV FAVA_DEBUG "false"
+
+USER fava
+
 ENTRYPOINT ["fava"]
