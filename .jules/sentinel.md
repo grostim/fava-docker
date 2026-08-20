@@ -17,3 +17,8 @@
 **Vulnerability:** The GitHub Actions workflow `.github/workflows/push-to-docker-hub.yaml` was configured to run on `pull_request` events and pushed Docker images unconditionally (`push: true`). It also ran the Docker Hub login step without conditional checks. This creates a Poisoned Pipeline Execution (PPE) vulnerability, allowing an attacker to submit a malicious pull request that executes in the context of the repository, gains access to the `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets, and publishes a compromised image to the official registry.
 **Learning:** Workflows triggered by `pull_request` events from external forks can execute with the repository's secrets if not properly scoped or protected, leading to supply chain attacks.
 **Prevention:** Always apply conditionals (e.g., `if: github.event_name != 'pull_request'`) to sensitive workflow steps like registry logins, and dynamically set publishing parameters (`push: ${{ github.event_name != 'pull_request' }}`) to ensure pull requests only build artifacts without deploying or publishing them.
+
+## 2024-05-18 - [Add Non-Root User in Dockerfile]
+**Vulnerability:** Docker container runs as the default `root` user, which violates the principle of least privilege and increases the risk of container breakout and privilege escalation if the application is compromised.
+**Learning:** It is crucial to explicitly define and switch to a non-root user in Dockerfiles. The `COPY` instruction also needs the `--chown` flag to ensure the newly created user has permissions to the application directory.
+**Prevention:** Always create a non-root user (e.g., `RUN groupadd -r app && useradd -r -g app app`), change file ownership, and use the `USER` directive in Dockerfiles for application containers.
