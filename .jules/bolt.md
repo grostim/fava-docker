@@ -24,3 +24,6 @@
 ## 2024-08-01 - [Optimize Dockerfile Layer Caching]
 **Learning:** In the `Dockerfile`, `COPY` operations for application code were occurring before installing system dependencies with `apt-get install`. This caused any changes in the application code to invalidate the `apt-get` cache, significantly slowing down subsequent Docker image builds because system packages had to be re-downloaded and re-installed every time.
 **Action:** Order Dockerfile instructions from least frequently changed to most frequently changed. Place `RUN apt-get install` commands for system dependencies before `COPY` instructions for application code so that application changes do not invalidate the system package cache.
+## 2026-08-20 - [Optimize Python Docker image size by stripping libraries and tests]
+**Learning:** The Python site-packages can grow very large due to included `.so` shared libraries containing unneeded symbols, and directories like `tests/` or `test/`. Furthermore `share` and `include` paths in venv can take up space but aren't needed at runtime.
+**Action:** When building Python Docker images, particularly with large scientific libraries like scipy and numpy, run `strip --strip-unneeded` on all `.so` files, and clean up `tests`, `test`, `share` and `include` directories. This can significantly reduce the final image size and reduce cold start time.
