@@ -27,3 +27,6 @@
 ## 2026-08-20 - [Optimize Python Docker image size by stripping libraries and tests]
 **Learning:** The Python site-packages can grow very large due to included `.so` shared libraries containing unneeded symbols, and directories like `tests/` or `test/`. Furthermore `share` and `include` paths in venv can take up space but aren't needed at runtime.
 **Action:** When building Python Docker images, particularly with large scientific libraries like scipy and numpy, run `strip --strip-unneeded` on all `.so` files, and clean up `tests`, `test`, `share` and `include` directories. This can significantly reduce the final image size and reduce cold start time.
+## $(date +%Y-%m-%d) - [Pre-compile Python bytecode for faster cold starts]
+**Learning:** Python automatically compiles to bytecode on first run, which adds a significant latency penalty during container startup times (cold starts), especially for applications with many dependencies. `pip install` usually byte-compiles, but multi-stage Docker builds or cleanup commands can leave `.pyc` files missing or fragmented.
+**Action:** Always pre-compile Python bytecode explicitly using `python -m compileall -q /app` before concluding the build stage. This ensures all bytecode is generated at build time, yielding faster startup times in the final deployed container.
