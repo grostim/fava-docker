@@ -17,6 +17,9 @@ RUN find /app -name "*.so" -exec strip --strip-unneeded {} + 2>/dev/null || true
     find /app -type d -name "test" -exec rm -rf {} + 2>/dev/null || true && \
     rm -rf /app/share /app/include
 
+# Pre-compile Python bytecode to speed up container cold start times
+RUN python -m compileall -q /app || true
+
 RUN pip uninstall -y pip setuptools wheel
 
 #Distroless is too limited for my use.
