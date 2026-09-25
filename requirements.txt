@@ -10,7 +10,7 @@ fava-investor @ git+https://github.com/redstreet/fava_investor.git@f83db450ae3bd
 https://codeload.github.com/beancount/beanprice/zip/ab9e0cc2f03029d5af59f5bfcea38f03e271fb3d
 iexfinance>=0.5.0
 pricehist>=1.4.16
-tariochbctools>=1.6.3
+tariochbctools>=1.7.0
 pricehist>=1.4.14
 tariochbctools>=0.32.0
 fava-dashboards @ git+https://github.com/andreasgerstmayr/fava-dashboards.git@ca0f13620edf38280c05c8148d475eae25de8cf4
