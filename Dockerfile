@@ -19,6 +19,9 @@ RUN find /app -name "*.so" -exec strip --strip-unneeded {} + 2>/dev/null || true
 
 RUN pip uninstall -y pip setuptools wheel
 
+# Pre-compile Python bytecode to speed up container startup (cold starts)
+RUN python -m compileall -q /app
+
 #Distroless is too limited for my use.
 # I use Python
 FROM python:3.12-slim-bookworm
